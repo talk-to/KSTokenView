@@ -68,13 +68,15 @@ import UIKit
    @objc optional func tokenView(_ tokenView: KSTokenView, didSelectToken token: KSToken)
    @objc optional func tokenViewDidBeginEditing(_ tokenView: KSTokenView)
    @objc optional func tokenViewDidEndEditing(_ tokenView: KSTokenView)
-   @objc optional func tokenView(_ tokenView: KSTokenView, tokenObjectsFor selectedRowObject: AnyObject) -> [AnyObject]?
+   
    
    @objc func tokenView(_ tokenView: KSTokenView, performSearchWithString string: String, completion: ((_ results: Array<AnyObject>) -> Void)?)
    @objc func tokenView(_ tokenView: KSTokenView, displayTitleForObject object: AnyObject) -> String
    @objc optional func tokenView(_ tokenView: KSTokenView, withObject object: AnyObject, tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell
    @objc optional func tokenView(_ tokenView: KSTokenView, didSelectRowAtIndexPath indexPath: IndexPath)
-   
+   @objc optional func tokenView(_ tokenView: KSTokenView, didSelectRowObject object: AnyObject)
+   @objc optional func tokenView(_ tokenView: KSTokenView, tokenObjectsFor selectedRowObject: AnyObject) -> [AnyObject]?
+  
    @objc optional func tokenViewShouldDeleteAllToken(_ tokenView: KSTokenView) -> Bool
    @objc optional func tokenViewWillDeleteAllToken(_ tokenView: KSTokenView)
    @objc optional func tokenViewDidDeleteAllToken(_ tokenView: KSTokenView)
@@ -931,6 +933,7 @@ extension KSTokenView : UITableViewDelegate {
     
       let selectedRowObject: AnyObject = _resultArray[(indexPath as NSIndexPath).row]
       
+      delegate?.tokenView?(self, didSelectRowObject: selectedRowObject)
       let objects: [AnyObject] = delegate?.tokenView?(self, tokenObjectsFor: selectedRowObject) ?? [selectedRowObject]
     
       for object in objects {
