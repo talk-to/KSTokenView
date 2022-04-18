@@ -74,7 +74,23 @@ import UIKit
    @objc func tokenView(_ tokenView: KSTokenView, displayTitleForObject object: AnyObject) -> String
    @objc optional func tokenView(_ tokenView: KSTokenView, withObject object: AnyObject, tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell
    @objc optional func tokenView(_ tokenView: KSTokenView, didSelectRowAtIndexPath indexPath: IndexPath)
+  
+  /**
+  didSelectRowObject : Notifies delegate when a suggestion is selected from table view by the user
+  - parameter object: Selected object which is an element of "_resultArray" array
+  */
    @objc optional func tokenView(_ tokenView: KSTokenView, didSelectRowObject object: AnyObject)
+  
+  /**
+  tokenObjectsFor : Notifies delegate when a suggestion is selected from table view by the user and expects list of token objects to be returned by the delegate, that are to be added in token Field for the given selection.
+  This function enables support of adding multiple objects in token Field, on selecting a single suggestion object in suggestion table view.
+   
+  - parameter selectedRowObject: Selected object which is an element of "_resultArray" array
+  
+  - returns: Optional array of objects which should be added to tokens field
+   
+   Note: If the function is not implemented by delegate OR function is implemented but nil is returned for a selection, then the selected suggestion object itself is added to tokens field. If an empty array is returned for a selection, then no token is added in tokens field.
+  */
    @objc optional func tokenView(_ tokenView: KSTokenView, tokenObjectsFor selectedRowObject: AnyObject) -> [AnyObject]?
   
    @objc optional func tokenViewShouldDeleteAllToken(_ tokenView: KSTokenView) -> Bool
