@@ -945,10 +945,11 @@ extension KSTokenView : UITableViewDelegate {
    
    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
       delegate?.tokenView?(self, didSelectRowAtIndexPath: indexPath)
-    
+      //selectedRowObject can either be individual contact or a contact list
       let selectedRowObject: AnyObject = _resultArray[(indexPath as NSIndexPath).row]
       
       delegate?.tokenView?(self, didSelectRowObject: selectedRowObject)
+    //Will return multiple participants in case of contact list else will return a single participant.
       let objects: [AnyObject] = delegate?.tokenView?(self, tokenObjectsFor: selectedRowObject) ?? [selectedRowObject]
     
       for object in objects {
