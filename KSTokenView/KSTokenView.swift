@@ -87,11 +87,11 @@ import UIKit
    
   - parameter selectedRowObject: Selected object which is an element of "_resultArray" array
   
-  - returns: Optional array of objects which should be added to tokens field
+  - returns: Array of objects which should be added to tokens field
    
-   Note: If the function is not implemented by delegate OR function is implemented but nil is returned for a selection, then the selected suggestion object itself is added to tokens field. If an empty array is returned for a selection, then no token is added in tokens field.
+   Note: If the function is not implemented by delegate, then the selected suggestion object (selectedRowObject) itself is added to tokens field. If an empty array is returned for a selection, then no token is added in tokens field.
   */
-   @objc optional func tokenView(_ tokenView: KSTokenView, tokenObjectsFor selectedRowObject: AnyObject) -> [AnyObject]?
+   @objc optional func tokenView(_ tokenView: KSTokenView, tokenObjectsFor selectedRowObject: AnyObject) -> [AnyObject]
   
    @objc optional func tokenViewShouldDeleteAllToken(_ tokenView: KSTokenView) -> Bool
    @objc optional func tokenViewWillDeleteAllToken(_ tokenView: KSTokenView)
