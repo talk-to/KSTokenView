@@ -35,7 +35,7 @@ enum KSTokenFieldState {
    @objc optional func tokenFieldDidSelectToken(_ token: KSToken)
    @objc optional func tokenFieldDidBeginEditing(_ tokenField: KSTokenField)
    @objc optional func tokenFieldDidEndEditing(_ tokenField: KSTokenField)
-  @objc optional func tokenLongPressed(_ token: KSToken)
+  func tokenLongPressed(_ token: KSToken)
 }
 
 
@@ -676,6 +676,7 @@ open class KSTokenField: UITextField {
     guard gesture.state == .began,
       let token = gesture.view as? KSToken
     else { return }
+    tokenTouchUpInside(token)
     tokenFieldDelegate?.tokenLongPressed(token)
   }
    
