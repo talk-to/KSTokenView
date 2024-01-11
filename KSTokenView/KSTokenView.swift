@@ -100,6 +100,8 @@ import UIKit
    
    @objc optional func tokenViewDidShowSearchResults(_ tokenView: KSTokenView)
    @objc optional func tokenViewDidHideSearchResults(_ tokenView: KSTokenView)
+  
+  func tokenView(_ tokenView: KSTokenView, didLongPress token: KSToken)
 }
 
 //MARK: - KSTokenView
@@ -864,6 +866,10 @@ extension KSTokenView : KSTokenFieldDelegate {
    func tokenFieldShouldChangeHeight(_ height: CGFloat) {
       _changeHeight(height)
    }
+  
+  func tokenLongPressed(_ token: KSToken) {
+    delegate?.tokenView(self, didLongPress: token)
+  }
 }
 
 

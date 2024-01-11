@@ -35,6 +35,7 @@ enum KSTokenFieldState {
    @objc optional func tokenFieldDidSelectToken(_ token: KSToken)
    @objc optional func tokenFieldDidBeginEditing(_ tokenField: KSTokenField)
    @objc optional func tokenFieldDidEndEditing(_ tokenField: KSTokenField)
+  func tokenLongPressed(_ token: KSToken)
 }
 
 
@@ -244,6 +245,9 @@ open class KSTokenField: UITextField {
       if (!tokens.contains(token)) {
          token.addTarget(self, action: #selector(KSTokenField.tokenTouchDown(_:)), for: .touchDown)
          token.addTarget(self, action: #selector(KSTokenField.tokenTouchUpInside(_:)), for: .touchUpInside)
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressGestureAction))
+        token.addGestureRecognizer(longPressGesture)
+        
          tokens.append(token)
          _insertToken(token)
       }
@@ -667,6 +671,13 @@ open class KSTokenField: UITextField {
    @objc func tokenTouchUpInside(_ token: KSToken) {
       selectToken(token)
    }
+  
+  @objc func longPressGestureAction(_ gesture: UILongPressGestureRecognizer) {
+    guard gesture.state == .began,
+      let token = gesture.view as? KSToken
+    else { return }
+    tokenFieldDelegate?.tokenLongPressed(token)
+  }
    
    override open func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
       if (touch.view == self) {
