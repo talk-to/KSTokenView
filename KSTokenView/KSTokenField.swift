@@ -35,7 +35,7 @@ enum KSTokenFieldState {
    @objc optional func tokenFieldDidSelectToken(_ token: KSToken)
    @objc optional func tokenFieldDidBeginEditing(_ tokenField: KSTokenField)
    @objc optional func tokenFieldDidEndEditing(_ tokenField: KSTokenField)
-  func tokenLongPressed(_ token: KSToken)
+  @objc optional func tokenLongPressed(_ token: KSToken)
 }
 
 
