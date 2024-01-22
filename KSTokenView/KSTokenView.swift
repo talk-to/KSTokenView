@@ -376,6 +376,10 @@ open class KSTokenView: UIView {
          _updateTokenFieldLayout(style)
       }
    }
+  
+  public var tokenFieldMaxY: CGFloat {
+    _tokenField.frame.maxY
+  }
    
    //MARK: - Constructors
    //__________________________________________________________________________________
