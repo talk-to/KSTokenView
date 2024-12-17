@@ -906,38 +906,38 @@ extension KSTokenView : UITextFieldDelegate {
     
       // remove the empty text marker from the beginning of the string
       if (olderText.first == KSTextEmpty.first) {
-				olderTextTrimmed = String(olderText.dropFirst())
+        olderTextTrimmed = String(olderText.dropFirst())
       }
     
       // Check if character is removed at some index
       // Remove character at that index
       if (string.isEmpty) {
-				// Safely convert NSRange to Swift Range
-				if let rangeInText = Range(range, in: olderText) {
-						var mutableText = olderText
-						mutableText.removeSubrange(rangeInText)
-						searchString = mutableText.trimmingCharacters(in: .whitespaces)
-				} else {
-						// Fallback for invalid range
-						searchString = olderText.trimmingCharacters(in: .whitespaces)
-				}
+        // Safely convert NSRange to Swift Range
+        if let rangeInText = Range(range, in: olderText) {
+          var mutableText = olderText
+          mutableText.removeSubrange(rangeInText)
+          searchString = mutableText.trimmingCharacters(in: .whitespaces)
+        } else {
+          // Fallback for invalid range
+          searchString = olderText.trimmingCharacters(in: .whitespaces)
+        }
       } else { // new character added
-         if (tokenizingCharacters.contains(string) && olderText != KSTextEmpty && olderTextTrimmed != "") {
-            addTokenWithTitle(olderTextTrimmed, tokenObject: nil)
-            _hideSearchResults()
-            return false
-         }
-				 // Safely replace characters using NSString to handle NSRange properly
-				 if let olderTextNSString = olderText as NSString? {
-				   searchString = olderTextNSString.replacingCharacters(in: range, with: string)
-				 } else {
-					 searchString = string
-				 }
-				 // Remove the empty text marker if present
-         if (searchString.first == KSTextEmpty.first) {
-					 searchString = String(searchString.dropFirst())
-         }
-      }
+        if (tokenizingCharacters.contains(string) && olderText != KSTextEmpty && olderTextTrimmed != "") {
+          addTokenWithTitle(olderTextTrimmed, tokenObject: nil)
+          _hideSearchResults()
+					return false
+				}
+				// Safely replace characters using NSString to handle NSRange properly
+				if let olderTextNSString = olderText as NSString? {
+					searchString = olderTextNSString.replacingCharacters(in: range, with: string)
+				} else {
+					searchString = string
+				}
+				// Remove the empty text marker if present
+				if (searchString.first == KSTextEmpty.first) {
+					searchString = String(searchString.dropFirst())
+				}
+		}
     
       // Allow all other characters
       if (searchString.count >= minimumCharactersToSearch && searchString != "\n") {
