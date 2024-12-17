@@ -925,19 +925,19 @@ extension KSTokenView : UITextFieldDelegate {
         if (tokenizingCharacters.contains(string) && olderText != KSTextEmpty && olderTextTrimmed != "") {
           addTokenWithTitle(olderTextTrimmed, tokenObject: nil)
           _hideSearchResults()
-					return false
-				}
-				// Safely replace characters using NSString to handle NSRange properly
-				if let olderTextNSString = olderText as NSString? {
-					searchString = olderTextNSString.replacingCharacters(in: range, with: string)
-				} else {
-					searchString = string
-				}
-				// Remove the empty text marker if present
-				if (searchString.first == KSTextEmpty.first) {
-					searchString = String(searchString.dropFirst())
-				}
-		}
+          return false
+        }
+        // Safely replace characters using NSString to handle NSRange properly
+        if let olderTextNSString = olderText as NSString? {
+          searchString = olderTextNSString.replacingCharacters(in: range, with: string)
+        } else {
+          searchString = string
+        }
+        // Remove the empty text marker if present
+        if (searchString.first == KSTextEmpty.first) {
+          searchString = String(searchString.dropFirst())
+        }
+      }
     
       // Allow all other characters
       if (searchString.count >= minimumCharactersToSearch && searchString != "\n") {
