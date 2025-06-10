@@ -620,9 +620,10 @@ open class KSTokenView: UIView {
    - parameter object: Custom object
    */
    open func deleteTokenWithObject(_ object: AnyObject?) {
-      if object == nil {return}
+	  guard let object = object else { return }
       for token in _tokenField.tokens {
-         if (token.object!.isEqual(object)) {
+		 guard let tokenObject = token.object else { continue }
+		 if (tokenObject.isEqual(object)) {
             _removeToken(token)
             break
          }
@@ -794,7 +795,8 @@ open class KSTokenView: UIView {
                
                // Search if already tokenized
                for token: KSToken in _tokenField.tokens {
-                  if (object.isEqual(token.object)) {
+				  guard let tokenObject = token.object else { continue }
+				  if (object.isEqual(tokenObject)) {
                      shouldAdd = false
                      break
                   }
