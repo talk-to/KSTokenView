@@ -619,15 +619,16 @@ open class KSTokenView: UIView {
    
    - parameter object: Custom object
    */
-   open func deleteTokenWithObject(_ object: AnyObject?) {
-      if object == nil {return}
-      for token in _tokenField.tokens {
-         if (token.object!.isEqual(object)) {
-            _removeToken(token)
-            break
-         }
-      }
-   }
+	open func deleteTokenWithObject(_ object: AnyObject?) {
+		guard let object = object else { return }
+		for token in _tokenField.tokens {
+			guard let tokenObject = token.object else { continue }
+			if (tokenObject.isEqual(object)) {
+				_removeToken(token)
+				break
+			}
+		}
+	}
    
    /**
    Deletes all added tokens. This doesn't delete sticky token
@@ -782,36 +783,37 @@ open class KSTokenView: UIView {
       _searchTableView.frame.origin = CGPoint(x: 0, y: height)
    }
    
-   fileprivate func _filteredSearchResults(_ results: Array <AnyObject>) -> Array <AnyObject> {
-      var filteredResults: Array<AnyObject> = Array()
-      
-      for object: AnyObject in results {
-         // Check duplicates in array
-         var shouldAdd = !(filteredResults as NSArray).contains(object)
-         
-         if (shouldAdd) {
-            if (!shouldDisplayAlreadyTokenized && _tokenField.tokens.count > 0) {
-               
-               // Search if already tokenized
-               for token: KSToken in _tokenField.tokens {
-                  if (object.isEqual(token.object)) {
-                     shouldAdd = false
-                     break
-                  }
-               }
-            }
-            
-            if (shouldAdd) {
-               filteredResults.append(object)
-            }
-         }
-      }
-      
-      if (shouldSortResultsAlphabatically) {
-         return filteredResults.sorted(by: { s1, s2 in return self._sortStringForObject(s1) < self._sortStringForObject(s2) })
-      }
-      return filteredResults
-   }
+	fileprivate func _filteredSearchResults(_ results: Array <AnyObject>) -> Array <AnyObject> {
+		var filteredResults: Array<AnyObject> = Array()
+		
+		for object: AnyObject in results {
+			// Check duplicates in array
+			var shouldAdd = !(filteredResults as NSArray).contains(object)
+			
+			if (shouldAdd) {
+				if (!shouldDisplayAlreadyTokenized && _tokenField.tokens.count > 0) {
+					
+					// Search if already tokenized
+					for token: KSToken in _tokenField.tokens {
+						guard let tokenObject = token.object else { continue }
+						if (object.isEqual(tokenObject)) {
+							shouldAdd = false
+							break
+						}
+					}
+				}
+				
+				if (shouldAdd) {
+					filteredResults.append(object)
+				}
+			}
+		}
+		
+		if (shouldSortResultsAlphabatically) {
+			return filteredResults.sorted(by: { s1, s2 in return self._sortStringForObject(s1) < self._sortStringForObject(s2) })
+		}
+		return filteredResults
+	}
    
    fileprivate func _sortStringForObject(_ object: AnyObject) -> String {
       let title = (delegate?.tokenView(self, displayTitleForObject: object))!
